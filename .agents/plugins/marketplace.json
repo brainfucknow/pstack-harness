@@ -1,0 +1,19 @@
+{
+  "name": "pstack-harness",
+  "interface": {
+    "displayName": "pstack-harness"
+  },
+  "plugins": [
+    {
+      "name": "pstack",
+      "source": {
+        "source": "local",
+        "path": "./"
+      },
+      "policy": {
+        "installation": "AVAILABLE"
+      },
+      "category": "Developer Tools"
+    }
+  ]
+}
