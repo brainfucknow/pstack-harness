@@ -1,0 +1,19 @@
+{
+  "name": "pstack-harness",
+  "owner": {
+    "name": "pstack-harness contributors"
+  },
+  "plugins": [
+    {
+      "name": "pstack",
+      "source": "./",
+      "description": "pstack by Lauren Tan (poteto), from cursor/plugins. Rigorous agent workflows: skills, principles, and subagents for writing less, but higher quality code.",
+      "author": {
+        "name": "Lauren Tan"
+      },
+      "homepage": "https://github.com/brainfucknow/pstack-harness",
+      "repository": "https://github.com/brainfucknow/pstack-harness",
+      "license": "MIT"
+    }
+  ]
+}
