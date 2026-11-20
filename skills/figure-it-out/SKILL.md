@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 # Figure it out
 
-Outside Cursor, read the adapter for your harness once per session before you follow this skill: [Claude Code](../../docs/harness/claude-code.md), [Codex](../../docs/harness/codex.md), or [GitHub Copilot](../../docs/harness/copilot.md). It maps the Cursor names in pstack skills to your harness.
+Outside Cursor, read your harness adapter once per session: [Claude Code](../../docs/harness/claude-code.md), [Codex](../../docs/harness/codex.md), [GitHub Copilot](../../docs/harness/copilot.md).
 
 When the task matches no playbook, design one. The deliverable before any code is the workflow itself: a sequence of phases that scales rigor to the task, runs the scientific method, and leaves a decision trail a human can audit after stepping away.
 

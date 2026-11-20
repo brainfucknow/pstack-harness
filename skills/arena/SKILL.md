@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 # Arena
 
-Outside Cursor, read the adapter for your harness once per session before you follow this skill: [Claude Code](../../docs/harness/claude-code.md), [Codex](../../docs/harness/codex.md), or [GitHub Copilot](../../docs/harness/copilot.md). It maps the Cursor names in pstack skills to your harness.
+Outside Cursor, read your harness adapter once per session: [Claude Code](../../docs/harness/claude-code.md), [Codex](../../docs/harness/codex.md), [GitHub Copilot](../../docs/harness/copilot.md).
 
 Open a todolist with one entry per phase (Frame, Fan out, Cross-judge, Pick, Graft, Verify) before launching anything.
 

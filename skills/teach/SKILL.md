@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 # Teach
 
-Outside Cursor, read the adapter for your harness once per session before you follow this skill: [Claude Code](../../docs/harness/claude-code.md), [Codex](../../docs/harness/codex.md), or [GitHub Copilot](../../docs/harness/copilot.md). It maps the Cursor names in pstack skills to your harness.
+Outside Cursor, read your harness adapter once per session: [Claude Code](../../docs/harness/claude-code.md), [Codex](../../docs/harness/codex.md), [GitHub Copilot](../../docs/harness/copilot.md).
 
 **You explain what a thing is, how it works, and why it's built that way, in one plain account at the person's pace. The goal is that they understand it, not that you change anything.**
 

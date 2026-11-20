@@ -33,7 +33,7 @@ pstack skills are written for Cursor and use Cursor names for tools, subagent fi
 
 - `skills/` and `agents/` are shared by every harness.
 - Each harness has one adapter doc in `docs/harness/`: [claude-code.md](docs/harness/claude-code.md) (from upstream), [codex.md](docs/harness/codex.md), and [copilot.md](docs/harness/copilot.md).
-- Each `SKILL.md` that uses Cursor names gets one paragraph after its title that links all three adapters.
+- Each `SKILL.md` that uses Cursor names gets one sentence after its title that links all three adapters.
 - Claude Code reads `.claude-plugin/` and uses `agents/` as is. The Codex and Copilot manifests and agent definitions live elsewhere: Codex reads `.codex-plugin/plugin.json`, `.agents/plugins/marketplace.json`, and the roles in `harness/codex/agents/`. Copilot reads the root `plugin.json` and the agents in `harness/copilot/agents/`.
 
 `scripts/build.mjs` generates these paths from the pinned upstream commit. Do not edit them by hand:

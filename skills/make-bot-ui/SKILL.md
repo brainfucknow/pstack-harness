@@ -8,7 +8,7 @@ disable-model-invocation: true
 ---
 # How to make a bot UI
 
-Outside Cursor, read the adapter for your harness once per session before you follow this skill: [Claude Code](../../docs/harness/claude-code.md), [Codex](../../docs/harness/codex.md), or [GitHub Copilot](../../docs/harness/copilot.md). It maps the Cursor names in pstack skills to your harness.
+Outside Cursor, read your harness adapter once per session: [Claude Code](../../docs/harness/claude-code.md), [Codex](../../docs/harness/codex.md), [GitHub Copilot](../../docs/harness/copilot.md).
 
 Build a page the user clicks. A server on this computer POSTs JSON to a webhook routine. The bot wakes with that JSON. Keep the sender key on the server. Do not put the sender key in the browser, in chat, or in this skill.
 

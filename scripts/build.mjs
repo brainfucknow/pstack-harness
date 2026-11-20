@@ -37,9 +37,9 @@ const ADAPTERS = [
   { name: "GitHub Copilot", path: "docs/harness/copilot.md" },
 ];
 const ADAPTER_PARAGRAPH =
-  "Outside Cursor, read the adapter for your harness once per session before you follow this skill: " +
-  ADAPTERS.map(({ name, path }, i) => `${i === ADAPTERS.length - 1 ? "or " : ""}[${name}](../../${path})`).join(", ") +
-  ". It maps the Cursor names in pstack skills to your harness.";
+  "Outside Cursor, read your harness adapter once per session: " +
+  ADAPTERS.map(({ name, path }) => `[${name}](../../${path})`).join(", ") +
+  ".";
 
 const TERMS = [
   { key: "`Task`", re: /`Task`|\bTask (tool|subagent|call)/ },

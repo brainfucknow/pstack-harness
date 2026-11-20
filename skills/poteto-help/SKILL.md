@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 # Poteto help
 
-Outside Cursor, read the adapter for your harness once per session before you follow this skill: [Claude Code](../../docs/harness/claude-code.md), [Codex](../../docs/harness/codex.md), or [GitHub Copilot](../../docs/harness/copilot.md). It maps the Cursor names in pstack skills to your harness.
+Outside Cursor, read your harness adapter once per session: [Claude Code](../../docs/harness/claude-code.md), [Codex](../../docs/harness/codex.md), [GitHub Copilot](../../docs/harness/copilot.md).
 
 Answer the user's question about pstack, hand them a prompt they can send, and link the file the answer came from. For a help question, don't start the work. The user asked how, and a pstack run spends real tokens, so let them send the prompt.
 
