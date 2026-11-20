@@ -1,0 +1,28 @@
+{
+  "name": "pstack",
+  "version": "0.15.46",
+  "description": "if you want to go fast, go deep first. pstack helps you write less, but higher quality code. rigorous agent workflows you can parallelize with confidence.",
+  "author": {
+    "name": "Lauren Tan"
+  },
+  "homepage": "https://github.com/brainfucknow/pstack-harness",
+  "repository": "https://github.com/brainfucknow/pstack-harness",
+  "license": "MIT",
+  "keywords": [
+    "pstack",
+    "poteto-mode",
+    "workflow",
+    "principles",
+    "agent-style",
+    "subagents",
+    "unslop"
+  ],
+  "skills": "./skills",
+  "interface": {
+    "displayName": "pstack",
+    "shortDescription": "Rigorous agent workflows: write less, but higher quality code.",
+    "developerName": "Lauren Tan",
+    "category": "Developer Tools",
+    "websiteURL": "https://github.com/brainfucknow/pstack-harness"
+  }
+}
