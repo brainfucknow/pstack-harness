@@ -39,8 +39,8 @@ Codex plugins cannot ship custom agents, so install the two roles by hand. Copy 
 mkdir -p ~/.codex/agents
 # From a clone:
 cp ~/.agents/skills/pstack-harness/harness/codex/agents/*.toml ~/.codex/agents/
-# Or from the plugin cache:
-cp ~/.codex/plugins/cache/pstack-harness/pstack/*/harness/codex/agents/*.toml ~/.codex/agents/
+# Or from the plugin cache, using the newest cached version:
+cp "$(ls -d ~/.codex/plugins/cache/pstack-harness/pstack/*/ | sort -V | tail -n 1)"harness/codex/agents/*.toml ~/.codex/agents/
 ```
 
 This adds the `poteto-agent` and `comment-sicko` roles. They set no model or effort, so pstack picks those per task. Re-copy them after an update. Without them, pstack falls back to a default agent that reads `agents/<name>.md` first.
@@ -59,10 +59,12 @@ enabled = true
 [features]
 default_mode_request_user_input = true
 
-# Subagents are on by default. This raises how many run at once
-# (default: 3 with the V2 tools, 6 with V1).
-[agents]
-max_threads = 6
+# Subagents are on by default. This raises how many run at once.
+# With the V2 tools the limit is this value minus 1 for the root agent (default 4).
+# The V1 tools read `[agents] max_threads` instead (default 6).
+# Codex also uses `[agents] max_threads` for V2 when this key is unset.
+[features.multi_agent_v2]
+max_concurrent_threads_per_session = 8
 ```
 
 Without these, pstack still works. It keeps its phase list in the reply and asks questions in plain text.

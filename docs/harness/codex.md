@@ -31,7 +31,7 @@ Codex has two generations of subagent tools, chosen per model. V1 has `send_inpu
 | `run_in_background: true` | Omit. `spawn_agent` never blocks. |
 | `resume` | V1: `send_input` to an open agent, or `resume_agent` then `send_input` for a closed one. V2: `followup_task` to a live agent. When the agent is gone, spawn a new one and paste the earlier result into its brief. |
 | `file_attachments` | List the paths in the brief. |
-| Spawn many agents in one message | V2 runs 3 subagents at once by default and V1 runs 6. The user raises it with `[agents] max_threads`. When a step needs more, run the rest as earlier ones finish, and say so. |
+| Spawn many agents in one message | V2 runs 3 subagents at once by default (`features.multi_agent_v2.max_concurrent_threads_per_session` minus 1 for the root, default 4). V1 runs 6 (`[agents] max_threads`). The user raises the key for the generation in use. The V2 key wins when both are set. When a step needs more, run the rest as earlier ones finish, and say so. |
 
 ## Models
 

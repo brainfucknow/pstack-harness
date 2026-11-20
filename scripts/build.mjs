@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 import { execFileSync } from "node:child_process";
+import { createHash } from "node:crypto";
 import { chmodSync, existsSync, mkdirSync, readdirSync, readFileSync, rmSync, statSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join, posix, relative } from "node:path";
@@ -21,6 +22,13 @@ const SHIPPED = [
   ["README.md", "docs/upstream-README.md"],
   ["LICENSE", "LICENSE"],
 ];
+const README_SENTENCE = "The plugin ships the skills, `docs/guide/`, and `README.md`.";
+const README_REPLACEMENT = "The plugin ships the skills and `docs/guide/`. The upstream `README.md` is `<pstack>/docs/upstream-README.md`.";
+// Hand-ported from these upstream agents, so a change upstream needs a re-port.
+const AGENT_PORTS = {
+  "comment-sicko.md": ["harness/codex/agents/comment-sicko.toml", "harness/copilot/agents/comment-sicko.agent.md"],
+  "poteto-agent.md": ["harness/codex/agents/poteto-agent.toml", "harness/copilot/agents/poteto-agent.agent.md"],
+};
 const GENERATED = SHIPPED.map(([, to]) => to);
 const MANIFESTS = [".claude-plugin/plugin.json", ".codex-plugin/plugin.json", "plugin.json", "upstream.json"];
 const ADAPTERS = [
@@ -49,6 +57,7 @@ const TERMS = [
   { key: "claude-", re: /\bclaude-[a-z]+-\d/ },
   { key: "grok-", re: /\bgrok-\d/ },
   { key: "gpt-", re: /\bgpt-\d/ },
+  { key: "gemini-", re: /\bgemini-\d/ },
   { key: "inherit-parent", re: /inherit-parent/ },
   { key: "pstack-models.mdc", re: /pstack-models\.mdc/ },
   { key: ".cursor/skills/", re: /\.cursor\/skills/ },
@@ -192,6 +201,12 @@ function render(pstack, upstream, wrapped) {
     const from = relative(pstack, source).split("\\").join("/");
     files.set(shippedPath(from), { from, ...file(source) });
   }
+  const adapter = files.get("docs/harness/claude-code.md");
+  const adapterText = adapter.bytes.toString("utf8");
+  if (adapterText.split(README_SENTENCE).length !== 2) {
+    fail(`docs/harness/claude-code.md no longer has the sentence "${README_SENTENCE}" exactly once. Update README_SENTENCE in ${COMMAND}.`);
+  }
+  adapter.bytes = Buffer.from(adapterText.replace(README_SENTENCE, () => README_REPLACEMENT));
   for (const skill of wrapped) {
     const entry = files.get(`skills/${skill}/SKILL.md`);
     entry.bytes = Buffer.from(entry.bytes.toString("utf8").replace(/^(# .*)\n+/m, `$1\n\n${ADAPTER_PARAGRAPH}\n\n`));
@@ -250,6 +265,26 @@ function danglingLinks(pstack, files) {
   return dangling;
 }
 
+function agentHashes(pstack) {
+  const dir = join(pstack, "agents");
+  return Object.fromEntries(
+    readdirSync(dir)
+      .filter((name) => name.endsWith(".md"))
+      .sort()
+      .map((name) => [name, createHash("sha256").update(readFileSync(join(dir, name))).digest("hex")]),
+  );
+}
+
+function changedAgents(recorded, current) {
+  return Object.keys({ ...recorded, ...current })
+    .sort()
+    .filter((name) => recorded?.[name] !== current[name])
+    .map((name) => {
+      const [codex, copilot] = AGENT_PORTS[name] ?? ["its Codex role", "its Copilot agent"];
+      return `upstream agents/${name} changed: re-port ${codex} and ${copilot}`;
+    });
+}
+
 function syncManifests(version) {
   const updates = new Map();
   for (const manifest of MANIFESTS) {
@@ -297,9 +332,12 @@ function main() {
   for (const problem of problems) console.log(`FAIL ${problem}`);
   if (problems.length > 0) process.exit(1);
 
+  const agents = agentHashes(pstack);
+  const agentChanges = upstream.agents ? changedAgents(upstream.agents, agents) : [];
+  for (const message of agentChanges) console.log(`${args.check ? "FAIL" : "WARN"} ${message}`);
   const manifestUpdates = syncManifests(version);
-  if (args.bump) {
-    const pin = { ...JSON.parse(readFileSync(join(ROOT, "upstream.json"), "utf8")), commit: upstream.commit, version };
+  if (args.bump || !upstream.agents) {
+    const pin = { ...JSON.parse(readFileSync(join(ROOT, "upstream.json"), "utf8")), commit: upstream.commit, version, agents };
     manifestUpdates.set("upstream.json", `${JSON.stringify(pin, null, 2)}\n`);
   }
 
@@ -314,7 +352,7 @@ function main() {
     if (drifted.length > 50) console.log(`... and ${drifted.length - 50} more`);
     for (const message of adapters.pending) console.log(`FAIL ${message}`);
     if (drifted.length > 0) console.log(`Generated files are out of date. Run \`${COMMAND}\` and commit the result.`);
-    if (drifted.length > 0 || adapters.pending.length > 0) process.exit(1);
+    if (drifted.length > 0 || adapters.pending.length > 0 || agentChanges.length > 0) process.exit(1);
     console.log("Generated files are up to date.");
     return;
   }

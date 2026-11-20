@@ -3,5 +3,9 @@
   "path": "pstack",
   "commit": "aaeb0ea3a0584995aa8f55ce44c6c5259414b896",
   "version": "0.15.46",
-  "license": "MIT"
+  "license": "MIT",
+  "agents": {
+    "comment-sicko.md": "0fb37221ab2a9159714d38f1528898e82b9758b5750f244bbe2e575bb593a1de",
+    "poteto-agent.md": "369065b46c217a5898cb1a400652c3399449252f4d5dbf8937eb8d4922d3cf6b"
+  }
 }

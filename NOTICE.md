@@ -16,6 +16,7 @@ This repository is an unofficial port. It is not affiliated with or endorsed by 
 
 - In each `SKILL.md` that uses Cursor names, it inserts one paragraph after the title. The paragraph tells the agent to read the adapter doc for its harness (Claude Code, Codex, or GitHub Copilot). Upstream inserts a similar sentence for Claude Code only.
 - It rewrites relative links so they resolve in this repository's layout. Upstream's `README.md` moves to `docs/upstream-README.md`, so links to and from it change. Links to upstream files that this repository does not ship, such as `automations/`, point at those files on GitHub at the pinned commit.
+- In the Claude Code adapter doc, it replaces the sentence that says the plugin ships `README.md`. The new text says upstream's `README.md` is at `docs/upstream-README.md`. The build fails if the original sentence is gone.
 - It copies the `version` from upstream's `plugin.json` into this repository's plugin manifests.
 
 This repository also adds files that are not in upstream:

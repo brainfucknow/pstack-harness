@@ -4,6 +4,8 @@ This repository packages pstack so you can install it in Claude Code, OpenAI Cod
 
 The skills, agents, and guide are the work of Lauren Tan ([poteto](https://github.com/poteto)). They come from [cursor/plugins/pstack](https://github.com/cursor/plugins/tree/main/pstack), pinned to commit [`aaeb0ea`](https://github.com/cursor/plugins/tree/aaeb0ea3a0584995aa8f55ce44c6c5259414b896/pstack), and are MIT licensed. See the [upstream license](https://github.com/cursor/plugins/blob/main/pstack/LICENSE), this repository's [LICENSE](LICENSE), and [NOTICE.md](NOTICE.md) for what this repository changes.
 
+Upstream pstack's own README is at [docs/upstream-README.md](docs/upstream-README.md).
+
 This is an unofficial port. It is not affiliated with or endorsed by Cursor.
 
 ## Install
@@ -58,6 +60,7 @@ This fetches that commit of `cursor/plugins`, regenerates the tree, and writes t
 Other options:
 
 - `node scripts/build.mjs --check` lists drift and exits non-zero without writing. CI runs it on every push and pull request.
+- The build records a sha256 of each upstream `agents/*.md` in `upstream.json`. When one changes, it prints which hand-ported files in `harness/` to re-port, and `--check` fails until you re-port and run `--bump <sha>`.
 - `--upstream <dir>` uses an existing checkout of `cursor/plugins` instead of fetching. Its `HEAD` must match the pin unless you pass `--allow-dirty-upstream`.
 
 Without `--upstream`, the script does a shallow git fetch of the pinned commit into a cache directory under your OS temp directory. It needs Node 20 or later and git.

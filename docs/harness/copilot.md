@@ -8,7 +8,7 @@ pstack skills use Cursor names. In GitHub Copilot, read this file once per sessi
 | --- | --- |
 | `Task` | `task`. Name the agent in `agent_type`. |
 | `AskQuestion` | `ask_user`. When the session has no `ask_user`, such as under `--no-ask-user` or in the cloud coding agent, ask in plain text. |
-| Open a todolist, or copy steps into the todolist tool | When the session lists the `sql` tool, insert one row per step into its `todos` table (`id`, `title`, `description`, `status`) and set `status` to `in_progress`, `done`, or `blocked` as you go. Else use the todo tool the session lists. Otherwise keep the list in your reply and update it at each phase. |
+| Open a todolist, or copy steps into the todolist tool | When the session lists the `sql` tool, use the schema that tool shows: one row per step, and update each row's status as you go. Else use the todo tool the session lists. Otherwise keep the list in your reply and update it at each phase. |
 | Run another pstack skill (`/name` or "the **name** skill") | Call the `skill` tool with `<name>` when it lists that skill. When it does not list it or refuses it, `view` `<pstack>/skills/<name>/SKILL.md` and follow it. When you tell the user to type it, write `/<name>`. In VS Code with the plugin installed, write `/pstack:<name>`. |
 | `Grep`, `Glob` | `grep`, `glob`. Use the shell with `rg` when the session has neither. |
 
@@ -57,7 +57,7 @@ Copilot loads every `*.instructions.md` file under `~/.copilot/instructions/` in
 | `.cursor/skills/`, `~/.cursor/skills/` | `.github/skills/`, `~/.copilot/skills/`. Copilot also reads `.agents/skills/` and `.claude/skills/` in a project and `~/.agents/skills/` at home. |
 | `~/.cursor/plugins/`, `.cursor-plugin/plugin.json` | `~/.copilot/installed-plugins/<marketplace>/<plugin>/`, so pstack is in `~/.copilot/installed-plugins/pstack-harness/pstack/`. Its manifest is `plugin.json`. |
 | `.cursor/rules/*.mdc`, always-applied rules | `.github/copilot-instructions.md`, `AGENTS.md`, or `.github/instructions/*.instructions.md`. Copilot never reads `.mdc` files. The model rule is the exception. See Models. |
-| `https://github.com/cursor/plugins/blob/main/pstack/<path>` | `<pstack>/<path>` when that file exists. The plugin ships the skills, `docs/guide/`, and `README.md`. Read the local copy and never fetch it. Give the user the URL when they need a link. |
+| `https://github.com/cursor/plugins/blob/main/pstack/<path>` | `<pstack>/<path>` when that file exists. The plugin ships the skills and `docs/guide/`. The upstream `README.md` is `<pstack>/docs/upstream-README.md`. Read the local copy and never fetch it. Give the user the URL when they need a link. |
 | Transcripts in `~/.cursor/projects/<slug>/agent-transcripts/` | `~/.copilot/session-state/<session-id>/events.jsonl`, one JSONL event log per session. The folders are keyed by session id, not by workspace. Find this workspace's sessions with `rg -l` for the workspace's absolute path across those files, and read only the matches. The newest match is the current session. |
 
 ## Surfaces
